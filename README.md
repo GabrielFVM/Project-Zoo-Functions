@@ -44,7 +44,7 @@ Lembre-se que você pode consultar nosso conteúdo sobre [Git & GitHub](https://
 	
 - São `4` dias de projeto
 	
-- Data para entrega final do projeto: `09/08/2022 14:00`
+- Data para entrega do projeto: `09/08/2022 14:00`
 	
 	
 </details><br />
