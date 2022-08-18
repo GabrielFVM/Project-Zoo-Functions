@@ -21,12 +21,15 @@ function fullName(id) {
     .map((Name) => `${Name.firstName} ${Name.lastName}`);
 }
 function findAnimalById(id) {
-  return species.find((specie) => specie.id === id);
+  return species
+    .find((specie) => specie.id === id);
 }
 //  função especies com parametro id do funcionario
 function especies(id) {
-  const worker = employees.find((employee) => employee.id === id);
-  return worker.responsibleFor.map((animalId) => findAnimalById(animalId).name);
+  const worker = employees
+    .find((employee) => employee.id === id);
+  return worker.responsibleFor
+    .map((animalId) => findAnimalById(animalId).name);
 }
 //  função location com id do funcionario
 function location(id) {
