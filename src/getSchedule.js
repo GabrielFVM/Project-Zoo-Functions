@@ -1,9 +1,11 @@
 const data = require('../data/zoo_data');
 
 const { species, hours } = data;
+const hoursEntries = Object.entries(hours);
+const allAnimals = species.map((specie) => specie.name);
+const allWeekDays = hoursEntries.map((entries) => entries[0]);
+const allDaysAnimals = [...allAnimals, ...allWeekDays];
 // função que retorna todos os horarios disponiveis caso a função não receba um parametro ou ele seja inválido
-function allSchedules() {
-}
 function getAnimalsByName(Name) {
   return species
     .find((specie) => specie.name === Name);
@@ -13,23 +15,53 @@ function animalSchedule(animal) {
   const specie = getAnimalsByName(animal);
   return specie.availability;
 }
-// função que retorna os horarios e animais disponiveis do dia
-function schedulesOfTheDay(day) {
+
+function officeHour(weekDay) {
+  if (weekDay === 'Monday') {
+    return 'CLOSED';
+  }
+  const dayFound = hoursEntries
+    .find((entrie) => entrie[0] === weekDay);
+  return `Open from ${dayFound[1].open}am until ${dayFound[1].close}pm`;
+}
+function exhibition(weekDay) {
+  if (weekDay === 'Monday') {
+    return 'The zoo will be closed!';
+  }
+  return species
+    .filter((specie) => specie.availability
+      .includes(weekDay))
+    .map((specie) => specie.name);
 }
 
-function officeHour() {
+function daySchedule(weekDay) {
+  return {
+    [weekDay]: {
+      officeHour: officeHour(weekDay),
+      exhibition: exhibition(weekDay),
+    },
+  };
 }
 
-function exhibition() {
+function allSchedules() {
+  return {
+    Tuesday: daySchedule('Tuesday').Tuesday,
+    Wednesday: daySchedule('Wednesday').Wednesday,
+    Thursday: daySchedule('Thursday').Thursday,
+    Friday: daySchedule('Friday').Friday,
+    Saturday: daySchedule('Saturday').Saturday,
+    Sunday: daySchedule('Sunday').Sunday,
+    Monday: daySchedule('Monday').Monday,
+  };
 }
-
-function scheduleBlock(weekDay) {
-  const open = hours
-    .find((hour) => hour);
-}
-
 function getSchedule(scheduleTarget) {
-  // seu código aqui
+  if (!scheduleTarget || !allDaysAnimals.includes(scheduleTarget)) {
+    return allSchedules();
+  }
+  if (allAnimals.includes(scheduleTarget)) {
+    return animalSchedule(scheduleTarget);
+  }
+  return daySchedule(scheduleTarget);
 }
 
 module.exports = getSchedule;
